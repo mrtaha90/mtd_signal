@@ -1,0 +1,7 @@
+services
+  - type worker
+    name rsi-sinyal-bot
+    runtime python
+    buildCommand 
+    startCommand python main.py
+    autoDeploy false
