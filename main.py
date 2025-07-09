@@ -14,7 +14,7 @@ client = Client(api_key, api_secret)
 # ----------------------------------------------------
 # 💬 Telegram Ayarları
 TELEGRAM_TOKEN = '7612629548:AAHf_4FvXMb6g9ARRj0PIMJzIvYqLfFMPYI'
-CHAT_ID = '5283753258'  # Lütfen doğru chat_id'yi gir
+CHAT_ID = '5283753258'
 
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
@@ -81,15 +81,15 @@ def check_rsi_signal(symbol):
         except:
             price = "N/A"
 
-        print(f"\n💰 Sinyal Geldi: {symbol}")
-        print(f"RSI 5m: {rsi_values['5minute']}")
-        print(f"RSI 15m: {rsi_values['15minute']}")
-        print(f"RSI Ortalama: {round(rsi_avg, 2)}")
+        print(f"\n💰 [Futures] Sinyal Geldi: {symbol}")
+        print(f"[Futures] RSI 5m: {rsi_values['5minute']}")
+        print(f"[Futures] RSI 15m: {rsi_values['15minute']}")
+        print(f"[Futures] RSI Ortalama: {round(rsi_avg, 2)}")
         print("-" * 50)
 
         # Telegram'a mesaj gönder
         message = f"""
-📢 *RSI Aşırı Yüksek Sinyali!*
+📢 *[Futures] RSI Aşırı Yüksek Sinyali!*
 🔸 Coin: `{symbol}`
 🔹 RSI 5m: {rsi_values['5minute']}
 🔹 RSI 15m: {rsi_values['15minute']}
@@ -101,7 +101,7 @@ def check_rsi_signal(symbol):
         send_telegram_message(message)
 
 # ----------------------------------------------------
-# ✅ USDT-PERPETUAL Coinleri Listele (Futures Market!)
+# ✅ USDT-PERPETUAL Coinleri Listele (Futures Market)
 def get_usdt_perpetual_symbols():
     exchange_info = client.futures_exchange_info()
     usdt_p_symbols = []
@@ -115,7 +115,7 @@ def get_usdt_perpetual_symbols():
 def worker(q):
     while not q.empty():
         symbol = q.get()
-        print(f"⏱️ Taranıyor: {symbol}")
+        print(f"⏱️ [Futures] Taranıyor: {symbol}")
         check_rsi_signal(symbol)
         q.task_done()
 
@@ -123,6 +123,7 @@ def worker(q):
 # Paralel Tarama Başlat
 def run_multithreaded_scan(thread_count=5):
     symbols = get_usdt_perpetual_symbols()
+    print(f"\n✅ [Futures] Taranacak Coin Sayısı: {len(symbols)}")
     q = Queue()
     for symbol in symbols:
         q.put(symbol)
@@ -139,9 +140,9 @@ def run_multithreaded_scan(thread_count=5):
 
 # ----------------------------------------------------
 # 🔁 Sonsuz Döngü – 2 Dakikada Bir Tarama
-send_telegram_message("✅ RSI Bot Başladı! Futures USDT-P Tarama Başladı.")
+send_telegram_message("✅ RSI Bot Başladı! [Futures USDT-P] Taraması Aktif.")
 while True:
-    print("\n🚀 Yeni tarama başlatılıyor...\n")
+    print("\n🚀 [Futures] Yeni tarama başlatılıyor...\n")
     run_multithreaded_scan(thread_count=5)
-    print("\n⏳ 2 dakika bekleniyor...\n")
+    print("\n⏳ [Futures] 2 dakika bekleniyor...\n")
     time.sleep(120)
