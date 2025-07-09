@@ -14,12 +14,12 @@ client = Client(api_key, api_secret)
 # ----------------------------------------------------
 # 💬 Telegram Ayarları
 TELEGRAM_TOKEN = '7612629548:AAHf_4FvXMb6g9ARRj0PIMJzIvYqLfFMPYI'
-CHAT_ID = '5283753258'
+CHAT_ID = '5283753258'  # Lütfen doğru chat_id'yi gir
 
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     payload = {
-        "chat_id":  CHAT_ID,
+        "chat_id": CHAT_ID,
         "text": message,
         "parse_mode": "Markdown"
     }
@@ -40,7 +40,7 @@ def RSI(series, period=14):
     return 100 - (100 / (1 + rs))
 
 # ----------------------------------------------------
-# RSI Hesaplama
+# RSI Hesaplama (Futures Verisiyle!)
 def get_rsi(symbol, interval='5m', limit=100):
     try:
         klines = client.futures_klines(symbol=symbol, interval=interval, limit=limit)
@@ -101,7 +101,7 @@ def check_rsi_signal(symbol):
         send_telegram_message(message)
 
 # ----------------------------------------------------
-# USDT Perpetual Coinleri Listele
+# ✅ USDT-PERPETUAL Coinleri Listele (Futures Market!)
 def get_usdt_perpetual_symbols():
     exchange_info = client.futures_exchange_info()
     usdt_p_symbols = []
@@ -138,8 +138,8 @@ def run_multithreaded_scan(thread_count=5):
         t.join()
 
 # ----------------------------------------------------
-# Sonsuz Döngü - 2 Dakikada Bir Tarama
-send_telegram_message("✅ Telegram bağlantısı başarılı! RSI bot aktif.")
+# 🔁 Sonsuz Döngü – 2 Dakikada Bir Tarama
+send_telegram_message("✅ RSI Bot Başladı! Futures USDT-P Tarama Başladı.")
 while True:
     print("\n🚀 Yeni tarama başlatılıyor...\n")
     run_multithreaded_scan(thread_count=5)
