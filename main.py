@@ -7,8 +7,8 @@ import requests
 
 # ----------------------------------------------------
 # 🔑 Binance API Anahtarları
-api_key = "YUfOMgF4oTbUJhnd1CPA1jDzgI0mT5zQmy2TYbpitgAspeR0gBRGzPGHqnpnBq54"
-api_secret = "MIN7Azs3LrOezkC2XBc57a3fEqLH6zcJweIXg4dD6JX35rWEMerosJdedYgpguPL"
+api_key = "NyU3gxsMwan2SuNWSff6ti1GUNAe8uge0GiPUUTLHz88tAd3oojljdZxK8EBx5Jg"
+api_secret = "pfR2FzYPYjwSulzCghMUiwyQRGJT615rMepX7tNbqbJGGrMcfZUAdjci2GE5ANet"
 client = Client(api_key, api_secret)
 
 # ----------------------------------------------------
